@@ -1,0 +1,11 @@
+{
+  "name": "dewie",
+  "version": "0.0.1",
+  "description": "Dewie is a resource management framework",
+  "main": "dewie.js",
+  "dependencies": {
+    "express": "*",
+    "mongoose": "*",
+    "body-parser": "~1.15.0"
+  }
+}
