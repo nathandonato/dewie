@@ -68,18 +68,18 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
                     $($scope.userName).removeClass("badinput");
                     $($scope.resourceSearch).removeClass("badinput");
                     var expiration = new Date(response.leaseExpire).toString();
-                    alert(" You now have access to the resource: '" + response.name + "'\n Your lease expires at this time: " + expiration);                     
+                    alert("You now have access to the resource: '" + response.name + "'\nYour lease expires at this time: " + expiration);                     
                 })
                 .error(function(err){
                     $($scope.userName).removeClass("badinput");
                     $($scope.resourceSearch).removeClass("badinput");
                     if (err == "null"){
-                        alert("Hmm, we don't have a record of that resource in our system.");
+                        alert("Resource does not exist.");
                     } else if (err.leaseExpire !== undefined) {
                         var expiration = new Date(err.leaseExpire).toString();
-                        alert(" A lease already exists for that resource.\n It expires at this time: " + expiration);
+                        alert("A lease already exists for that resource.\nIt expires at this time: " + expiration);
                     } else {
-                        alert("Something went horribly wrong.");
+                        alert("Database issue.\nTry restarting MongoDB.");
                     }
                 })
         }

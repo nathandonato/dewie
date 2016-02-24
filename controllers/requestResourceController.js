@@ -64,12 +64,6 @@ var requestResourceController = function(req, res, db){
         res.status(status);
         res.send(JSON.stringify(result));
     };
-
-    // When requesting a resource, we actually need to manipulate its data. 
-    // So we'll create the new object here.
-    this.getUpdateObject = function(){
-
-    };
 }
 
 module.exports = requestResourceController;

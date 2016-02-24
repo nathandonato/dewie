@@ -15,7 +15,11 @@
     <script src="js/app.js"></script>
     <style> 
         .nopadding { padding-left: 0 !important; } 
-        .badinput { border: 2px solid red !important; }</style>
+        .badinput { border: 2px solid red !important; }
+        .greentext { color: green; }
+        .autocomplete { border: 2px solid gray !important; }
+        .clickable { cursor: pointer; }
+    </style>
 </head>
 <body ng-controller="mainController">
     <div class="container">
@@ -26,22 +30,22 @@
             <h4 class="col-lg-12 nopadding">Enter your name.</h4>
         </div>
         <div class="row">
-            <input name= "userName" class="col-lg-3 nopadding"/>
+            <input name= "userName" class="col-lg-3"/>
         </div>
         <div class="row">
             <h4 class="col-lg-12 nopadding">{{context.instructions}}</h4>
         </div>
         <div class="row">
-            <input name= "resourceSearch" class="col-lg-5 nopadding" ng-model="text" ng-change="autocomplete()"/>
-            <button class = "btn-small col-lg-1" ng-click="verbResource[context.submitVerb]()">{{context.submitVerb}}</button>
+            <input name= "resourceSearch" class="col-lg-5" ng-model="text" ng-change="autocomplete()"/>
+            <button class = "btn btn-small col-lg-1" ng-click="verbResource[context.submitVerb]()">{{context.submitVerb}}</button>
             <h5 class="col-lg-1">
-                <i style="color: green" ng-show="adminSuccess">Success!</i>
+                <i class="greentext" ng-show="adminSuccess">Success!</i>
             </h5>
         </div>
         <div class="row">
-            <div class="col-lg-5 nopadding" style="border: 2px solid gray;" ng-show="autocompleteResults.length > 0">
+            <div class="col-lg-5 nopadding autocomplete" ng-show="autocompleteResults.length > 0">
                 <div ng-repeat="(key, value) in autocompleteResults">
-                    <span ng-click="autopopulate(value)">{{value}}</span>
+                    <span class="clickable" ng-click="autopopulate(value)">{{value}}</span>
                 </div>
             </div>
         </div>
@@ -49,7 +53,7 @@
             <div class="col-lg-5 nopadding">
                 <h5>
                     {{context.reader}}, click
-                    <a ng-click="switchContext(context.context)">here</a> 
+                    <a class="clickable" ng-click="switchContext(context.context)">here</a> 
                     to {{context.switchVerb}} resources.
                 </h5>
             </div>
