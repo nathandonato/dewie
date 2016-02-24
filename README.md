@@ -16,7 +16,7 @@ First, clone this repository.
 
 ```
 git clone https://github.com/nathandonato/dewie.git
-git cd dewie
+cd dewie
 ```
 
 Next, install necessary dependencies:
