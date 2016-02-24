@@ -15,7 +15,7 @@ Once you have the necessary system-level tools, you're ready to begin.
 First, clone this repository.
 
 ```
-git clone [REPO URL HERE]
+git clone https://github.com/nathandonato/dewie.git
 git cd dewie
 ```
 
