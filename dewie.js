@@ -52,8 +52,8 @@ initializeTrie.buildTrieFromDb();
 // ROUTES
 // ======
 app.get("/", function(req, res){
-    console.log(trie.findWord("thing1"));
-    console.log(trie.findWord("applesauce"));
+    console.dir(JSON.stringify(trie.placeMarker("ap").getOffspring("ap", [])));
+    // console.dir(trie);
     res.sendFile(__dirname + "/public/index.html");
 })
 
