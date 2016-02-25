@@ -7,10 +7,8 @@ var trieNode = function() {
 
     this.addWord = function(word){
         // If we have gone through the entire word, then catalogue it.
-        console.log(word);
         if (word.length == 0){
-        console.log("reached end. marked ^ as word");
-            this.isWord = true;
+            this.isWord = true;;
             return true;
         }
 

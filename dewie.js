@@ -4,15 +4,14 @@
 // ========
 // REQUIRES
 // ========
-var express   = require("express");
-var dewieTrie = require("./dewieTrie/trieNode.js");
-var mongoose  = require("mongoose");
+var express    = require("express");
+var dewieTrie  = require("./dewieTrie/trieNode.js");
+var mongoose   = require("mongoose");
 var bodyParser = require("body-parser");
 
 // =======
 // DB PREP
 // =======
-
 // Establish connection
 mongoose.connect("mongodb://localhost/dewieDb");
 var db = mongoose.connection;
@@ -38,6 +37,8 @@ var Resource = mongoose.model('Resource', resourceSchema, 'resources');
 var app  = express();
 // Use body parser
 app.use( bodyParser.json() ); // to support JSON-encoded bodies
+// Include static files
+app.use(express.static(__dirname + '/app'));
 
 // We'll access our trie through the root node.
 var trie = new dewieTrie("");
@@ -53,22 +54,20 @@ initializeTrie.buildTrieFromDb();
 // ======
 app.get("/", function(req, res){
     console.dir(JSON.stringify(trie.placeMarker("ap").getOffspring("ap", [])));
-    // console.dir(trie);
-    res.sendFile(__dirname + "/public/index.html");
-})
-
-app.get("/findWord", function(req, res){
-    // trie.findWord(req.word)
-    // return the result
+    res.sendFile(__dirname + "/app/index.html");
+    console.log(__dirname);
 })
 
 app.post("/requestResource", function(req, res){
-    // 
+    var requestResourceController = require("./controllers/requestResourceController.js");
+    var requestResource = new requestResourceController(req, res, Resource);
+    requestResource.findResource();
 })
 
-app.get("/resource", function(req, res){
-    // db.get(req.name)
-    // perhaps a get controller -- maybe dbVerbs.js?
+app.post("/autocomplete", function(req, res){
+    var autocompleteController = require("./controllers/autocompleteController.js");
+    var autocomplete = new autocompleteController(req, res, trie);
+    autocomplete.getAutocompleteResults();
 })
 
 app.post("/addResource", function(req, res){

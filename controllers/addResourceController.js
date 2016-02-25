@@ -14,7 +14,7 @@ var addResourceController = function(req, res, Resource, trie){
             name       : req.body.name,
             available  : true,
             lastUsed   : Date.now(),
-            lastUsedBy : ""
+            lastUsedBy : req.body.lastUsedBy
         }
     };
 
@@ -40,7 +40,7 @@ var addResourceController = function(req, res, Resource, trie){
 
     // Add resource to our trie dictionary
     this.addResourceToTrie = function(){
-        this.trie.addWord(req.body.name);
+        this.trie.addWord(this.req.body.name);
     }
 }
 

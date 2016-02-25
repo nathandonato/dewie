@@ -1,0 +1,51 @@
+<!-- index.html -->
+<!DOCTYPE html>
+
+<html ng-app="dewie">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Request Company Resources</title>
+    <!-- styles/scripts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <!-- static files -->
+    <script src="js/app.js"></script>
+    <style> .nopadding { padding-left: 0 !important; } </style>
+</head>
+<body ng-controller="mainController">
+    <div class="container">
+        <div class="row">
+            <h2 class="col-lg-12 nopadding">{{context.greeting}}</h2>
+        </div>
+        <div class="row">
+            <h4 class="col-lg-12 nopadding">Enter your name.</h4>
+        </div>
+        <div class="row">
+            <input name= "userName" class="col-lg-3 nopadding"/>
+        </div>
+        <div class="row">
+            <h4 class="col-lg-12 nopadding">{{context.instructions}}</h4>
+        </div>
+        <div class="row">
+            <input name= "resourceSearch" class="col-lg-5 nopadding" ng-model="text" ng-change="autocomplete()"/>
+            <button class = "btn-small" ng-click="verbResource(context.submitVerb)">{{context.submitVerb}}</button>
+        </div>
+        <div class="row">
+            <div class="col-lg-5 nopadding" style="border: 2px solid gray;" ng-show="autocompleteResults.length > 0">
+                <div ng-repeat="(key, value) in autocompleteResults">
+                    <span ng-click="autopopulate(value)">{{value}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 nopadding">
+                <h5>{{context.reader}}, click
+                <a ng-click="switchContext(context.context)">here</a> 
+                to {{context.switchVerb}} resources.</h5>
+            </div>
+        </div>
+    </div>
+</body>
