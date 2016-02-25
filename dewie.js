@@ -39,8 +39,7 @@ var resourceSchema = mongoose.Schema({
 // Define model
 var Resource = mongoose.model('Resource', resourceSchema, 'resources');
 
-// Seed sample data *
-// Determine if we need to seed sample data (if this is your first time booting this app);
+// Seed sample data * (Note that this is only for demonstration purposes)
 db.collection('resources').findOne({name: 'Applesauce'}, function (err, doc){
     if(err || doc == null){
         var seedDb = new seedDbController(db, Resource, trie);

@@ -6,6 +6,7 @@ var trieNode = function() {
     this.isWord   = false;
 
     this.addWord = function(word){
+        word = word.toUpperCase();
         // If we have gone through the entire word, then catalogue it.
         if (word.length == 0){
             this.isWord = true;;

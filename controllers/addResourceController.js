@@ -11,7 +11,7 @@ var addResourceController = function(req, res, Resource, trie){
     // We have to format the request in such a way that our DB understands it
     this.parseData = function(){
         this.data = {
-            name       : req.body.name,
+            name       : req.body.name.toUpperCase,
             lastUsedBy : req.body.lastUsedBy
         }
     };

@@ -50,7 +50,8 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
                     $scope.resourceSearch.value = "";
                 })
                 .error(function(response){
-                    console.log(response);
+                    alert("Failed to add resource.");
+                    $scope.adminSuccess = false;
                 })
         },
         request : function(){
@@ -59,7 +60,6 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
             }
             $http.post("/requestResource", $scope.verbResource.data())
                 .success(function(response){
-                    console.dir(response);
                     alert("You now have access to the resource: '" + response.name + "'\n Lease expires in 2 hours.");                     
                 })
                 .error(function(err){

@@ -7,11 +7,12 @@ var requestResourceController = function(req, res, db){
     this.dbObject  = null;
     // Lease time is in increments of hours. For ease of use, we'll just use 6 minutes.
     this.leaseTime = .1;
+    this.name      = this.req.body.name.toUpperCase();
 
     // Find the resource
     this.findResource = function(){
         var self = this;
-        this.db.collection('resources').findOne({"name" : self.req.body.name}, function (err, doc){
+        this.db.collection('resources').findOne({"name" : self.name}, function (err, doc){
             var returnDoc = doc;
             if (err){
                 // If error, send an error right away.
@@ -26,9 +27,13 @@ var requestResourceController = function(req, res, db){
                 } else if (doc.leaseExpire < Date.now()){
                     // If the previous lease has expired, we are free to lease it to the requester.
                     // We also have to update it in our DB
-                    var updateObj = self.getUpdateObject();
+                    var updateObj = {
+                        name        : self.name,
+                        leaseExpire : Date.now() + (self.leaseTime * 60 * 60 * 1000),
+                        lastUsedBy  : self.req.body.lastUsedBy
+                    };
                     self.db.collection('resources').update(
-                        {"name" : self.req.body.name},
+                        {"name" : self.name},
                         updateObj,
                         function(err, doc){
                             if (err){
@@ -63,12 +68,7 @@ var requestResourceController = function(req, res, db){
     // When requesting a resource, we actually need to manipulate its data. 
     // So we'll create the new object here.
     this.getUpdateObject = function(){
-        var leaseExpire = (Date.now() + (this.lease * 60 * 60 * 1000));
-        return {
-            name        : this.req.body.name,
-            leaseExpire : leaseExpire,
-            lastUsedBy  : this.req.body.lastUsedBy
-        };
+
     };
 }
 
