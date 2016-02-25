@@ -7,11 +7,11 @@ var seedDbController = function(db, Resource, trie){
 
     // Our sample data
     this.sampleData = [
-        {name : "APPLES" , lastUsedBy : "Tom" },
-        {name : "APPLESAUCE" , lastUsedBy : "Janet" },
-        {name : "CD PLAYER" , lastUsedBy : "Nathan" },
-        {name : "CD-ROM" , lastUsedBy : "Tom" },
-        {name : "MACBOOK" , lastUsedBy : "Janet" },
+        {name : "HARD DRIVE 1" , lastUsedBy : "Tom" },
+        {name : "HARD DRIVE 2" , lastUsedBy : "Janet" },
+        {name : "SSD 1" , lastUsedBy : "Nathan" },
+        {name : "SSD 2" , lastUsedBy : "Tom" },
+        {name : "MACBOOK 1" , lastUsedBy : "Janet" },
         {name : "MACBOOK PRO 1" , lastUsedBy : "Tom" },
         {name : "MACBOOK PRO 2" , lastUsedBy : "Janet" },
         {name : "MACBOOK AIR 1" , lastUsedBy : "Janet" }
