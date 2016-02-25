@@ -25,6 +25,10 @@ Next, install necessary dependencies:
 
 Then, we need mongoDb to be running. (Note, our app will assume your mongo is listening on the default port 28017.)
 
+```
+mongo
+```
+
 Finally, you are ready to run dewie.
 
 ```
