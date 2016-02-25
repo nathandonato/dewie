@@ -48,8 +48,12 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
                 .success(function(response){
                     $scope.adminSuccess = true;
                     $scope.resourceSearch.value = "";
+                    $($scope.userName).removeClass("badinput");
+                    $($scope.resourceSearch).removeClass("badinput");
                 })
                 .error(function(response){
+                    $($scope.userName).removeClass("badinput");
+                    $($scope.resourceSearch).removeClass("badinput");
                     alert("Failed to add resource. See the console for more details.");
                     console.log(JSON.stringify(response));
                     $scope.adminSuccess = false;
@@ -61,10 +65,14 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
             }
             $http.post("/requestResource", $scope.verbResource.data())
                 .success(function(response){
+                    $($scope.userName).removeClass("badinput");
+                    $($scope.resourceSearch).removeClass("badinput");
                     var expiration = new Date(response.leaseExpire).toString();
                     alert(" You now have access to the resource: '" + response.name + "'\n Your lease expires at this time: " + expiration);                     
                 })
                 .error(function(err){
+                    $($scope.userName).removeClass("badinput");
+                    $($scope.resourceSearch).removeClass("badinput");
                     if (err == "null"){
                         alert("Hmm, we don't have a record of that resource in our system.");
                     } else if (err.leaseExpire !== undefined) {
@@ -80,13 +88,13 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
     // Remind user to enter necessary data
     $scope.verifyInputs = function(){
         if ($scope.userName.value == ""){
-            $scope.userName.style.border = "2px solid red";
+            $($scope.userName).addClass("badinput");
             alert("Please enter your name.");
             return false;
         }
 
         if ($scope.resourceSearch.value == ""){
-            $scope.resourceSearch.style.border = "2px solid red";
+            $($scope.resourceSearch).addClass("badinput");
             alert("Please enter a resource name.");
             return false;
         }
@@ -129,6 +137,8 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
         // Switch UI depending if it's a user or an admin
         $scope.context = $scope.contexts[context];
         $scope.adminSuccess = false;
+        $($scope.userName).removeClass("badinput");
+        $($scope.resourceSearch).removeClass("badinput");
     }
 
     // Initialize default data
