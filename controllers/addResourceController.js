@@ -11,7 +11,7 @@ var addResourceController = function(req, res, Resource, trie){
     // We have to format the request in such a way that our DB understands it
     this.parseData = function(){
         this.data = {
-            name       : req.body.name.toUpperCase,
+            name       : req.body.name.toUpperCase(),
             lastUsedBy : req.body.lastUsedBy
         }
     };
@@ -28,10 +28,12 @@ var addResourceController = function(req, res, Resource, trie){
         newResource.save(function(error, data){
             // return error or object
             if(error){
-                res.json(error);
+                res.status(500);
+                res.send(JSON.stringify(error));
             }
             else{
-                res.json(data);
+                res.status(200);
+                res.send(JSON.stringify(data));
             }
         });
     };

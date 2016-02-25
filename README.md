@@ -30,3 +30,8 @@ Finally, you are ready to run dewie.
 ```
 forever dewie.js
 ```
+Once it's up and running, visit http://127.0.0.1:3000/
+
+Start typing to request or add company resources.
+
+_Hint: the server seeds some data into its database, so start by typing "mac" to see how it works._

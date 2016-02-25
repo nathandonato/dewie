@@ -50,7 +50,8 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
                     $scope.resourceSearch.value = "";
                 })
                 .error(function(response){
-                    alert("Failed to add resource.");
+                    alert("Failed to add resource. See the console for more details.");
+                    console.log(JSON.stringify(response));
                     $scope.adminSuccess = false;
                 })
         },
@@ -60,14 +61,15 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
             }
             $http.post("/requestResource", $scope.verbResource.data())
                 .success(function(response){
-                    alert("You now have access to the resource: '" + response.name + "'\n Lease expires in 2 hours.");                     
+                    var expiration = new Date(response.leaseExpire).toString();
+                    alert(" You now have access to the resource: '" + response.name + "'\n Your lease expires at this time: " + expiration);                     
                 })
                 .error(function(err){
                     if (err == "null"){
                         alert("Hmm, we don't have a record of that resource in our system.");
                     } else if (err.leaseExpire !== undefined) {
-                        var expiration = new Date(err.leaseExpire);
-                        alert("Someone else already has a lease on that resource.\nTheir lease expires at this time: " + expiration.toString());
+                        var expiration = new Date(err.leaseExpire).toString();
+                        alert(" A lease already exists for that resource.\n It expires at this time: " + expiration);
                     } else {
                         alert("Something went horribly wrong.");
                     }
