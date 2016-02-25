@@ -1,5 +1,5 @@
 # dewie
-A resource management framework
+A mock resource management framework
 
 ### To set up an instance of dewie:
 
