@@ -23,7 +23,7 @@ Next, install necessary dependencies:
 
 `npm install`
 
-Then, we need mongoDb to be running, and we need to create our database. (Note, our app will assume your mongo is listening on the default port 28017.)
+Then, we need mongoDb to be running. (Note, our app will assume your mongo is listening on the default port 28017.)
 
 Finally, you are ready to run dewie.
 
