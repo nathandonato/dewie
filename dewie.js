@@ -8,6 +8,16 @@ var express    = require("express");
 var dewieTrie  = require("./dewieTrie/trieNode.js");
 var mongoose   = require("mongoose");
 var bodyParser = require("body-parser");
+var seedDbController = require("./controllers/seedDbController.js");
+var requestResourceController = require("./controllers/requestResourceController.js");
+var autocompleteController = require("./controllers/autocompleteController.js");
+var addResourceController = require("./controllers/addResourceController.js");
+var trieFromDb = require("./dewieTrie/trieFromDb.js");
+
+// =========
+// TRIE PREP
+// =========
+var trie = new dewieTrie("");
 
 // =======
 // DB PREP
@@ -22,13 +32,21 @@ db.once("open", function(){
 
 // Define schema 
 var resourceSchema = mongoose.Schema({
-    name       : { type : String, unique : true, required : true },
-    available  : Boolean,
-    lastUsed   : Date,
-    lastUsedBy : String
+    name        : { type : String, unique : true, required : true },
+    leaseExpire : { type: Date, default : '01/01/1980' },            
+    lastUsedBy  : String
 });
 // Define model
 var Resource = mongoose.model('Resource', resourceSchema, 'resources');
+
+// Seed sample data *
+// Determine if we need to seed sample data (if this is your first time booting this app);
+db.collection('resources').findOne({name: 'Applesauce'}, function (err, doc){
+    if(err || doc == null){
+        var seedDb = new seedDbController(db, Resource, trie);
+        seedDb.seedDb();
+    }
+});
 
 // ========
 // APP PREP
@@ -40,12 +58,8 @@ app.use( bodyParser.json() ); // to support JSON-encoded bodies
 // Include static files
 app.use(express.static(__dirname + '/app'));
 
-// We'll access our trie through the root node.
-var trie = new dewieTrie("");
-
 // When first starting the application, we'll want to initialize our trie from our resource collection
 // NOTE: This assumes a small amount of objects in our db and that this application is running on its own server that has plenty of resources.
-var trieFromDb = require("./dewieTrie/trieFromDb.js");
 var initializeTrie = new trieFromDb(Resource, trie);
 initializeTrie.buildTrieFromDb();
 
@@ -59,19 +73,16 @@ app.get("/", function(req, res){
 })
 
 app.post("/requestResource", function(req, res){
-    var requestResourceController = require("./controllers/requestResourceController.js");
-    var requestResource = new requestResourceController(req, res, Resource);
+    var requestResource = new requestResourceController(req, res, db);
     requestResource.findResource();
 })
 
 app.post("/autocomplete", function(req, res){
-    var autocompleteController = require("./controllers/autocompleteController.js");
     var autocomplete = new autocompleteController(req, res, trie);
     autocomplete.getAutocompleteResults();
 })
 
 app.post("/addResource", function(req, res){
-    var addResourceController = require("./controllers/addResourceController.js");
     var addResource = new addResourceController(req, res, Resource, trie);
     addResource.createResource();
     addResource.addResourceToTrie();
@@ -80,5 +91,6 @@ app.post("/addResource", function(req, res){
 // LISTEN
 // ======
 app.listen(3000, function(){
-    console.log('Example app listening on port 3000!');
+    console.log('Dewie Resource Management system is ready!');
+    console.log('Visit http://127.0.0.1:3000/ to get started.');
 });

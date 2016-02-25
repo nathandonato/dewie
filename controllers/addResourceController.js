@@ -12,8 +12,6 @@ var addResourceController = function(req, res, Resource, trie){
     this.parseData = function(){
         this.data = {
             name       : req.body.name,
-            available  : true,
-            lastUsed   : Date.now(),
             lastUsedBy : req.body.lastUsedBy
         }
     };
@@ -40,7 +38,7 @@ var addResourceController = function(req, res, Resource, trie){
 
     // Add resource to our trie dictionary
     this.addResourceToTrie = function(){
-        this.trie.addWord(this.req.body.name);
+        this.trie.addWord(this.req.body.name.toUpperCase());
     }
 }
 

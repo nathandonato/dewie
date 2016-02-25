@@ -4,7 +4,7 @@ var addResourceController = function(req, res, trie){
     this.req    = req;
     this.res    = res;
     this.trie   = trie;
-    this.string = req.body.string;
+    this.string = req.body.string.toUpperCase();
 
     this.getAutocompleteResults = function(){
         // If an empty query, don't bother finding any results
@@ -12,7 +12,7 @@ var addResourceController = function(req, res, trie){
             res.send(JSON.stringify([]));
             return;
         }
-        var marker = trie.placeMarker(req.body.string);
+        var marker = trie.placeMarker(this.string);
 
         // If the query doesn't return any results, return 0 results
         if(!marker){
@@ -21,7 +21,7 @@ var addResourceController = function(req, res, trie){
         }
 
         // Return the results
-        res.send(JSON.stringify(marker.getOffspring(req.body.string, [])));
+        res.send(JSON.stringify(marker.getOffspring(this.string, [])));
     };
 }
 
