@@ -32,14 +32,16 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
         }
     };
 
-    // Determine which endpoint to hit depending on which user context we are in.
+    // These are the endpoints the user or admin will hit
     $scope.verbResource = {
+        // Data that we will send
         data : function(){
             return {
                 name       : $scope.resourceSearch.value,
                 lastUsedBy : $scope.userName.value
             };
         },
+        // /addResource
         add : function(){
             if (!$scope.verifyInputs()){
                 return;
@@ -59,17 +61,20 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
                     $scope.adminSuccess = false;
                 })
         },
+        // /requestResource
         request : function(){
             if (!$scope.verifyInputs()){
                 return;
             }
             $http.post("/requestResource", $scope.verbResource.data())
+                // User has successfully leased the resource
                 .success(function(response){
                     $($scope.userName).removeClass("badinput");
                     $($scope.resourceSearch).removeClass("badinput");
                     var expiration = new Date(response.leaseExpire).toString();
                     alert("You now have access to the resource: '" + response.name + "'\nYour lease expires at this time: " + expiration);                     
                 })
+                // Something went wrong. Handle possibilities here.
                 .error(function(err){
                     $($scope.userName).removeClass("badinput");
                     $($scope.resourceSearch).removeClass("badinput");
@@ -106,7 +111,9 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
     // It is wrapped in a timeout in case we want to only seek results
     // after the user has finished typing for several hundred milliseconds.
     // The purpose of this would be to lessen the number of requests.
+    // Since we're only concerned about demonstration and not performance, I've set it to zero.
     var timeoutId;
+    var timeoutLength = 0;
     $scope.autocomplete = function(){
         clearTimeout(timeoutId);
         $scope.adminSuccess = false;        
@@ -119,11 +126,11 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
                 .error(function (response) {
                     console.log("Failed to get autocomplete data.")
                 });
-        }, 0);
+        }, timeoutLength);
     }
 
     $scope.viewAutocompleteResults = function(response){
-        // Populates autocomplte results
+        // Populates autocomplete results
         $scope.autocompleteResults = response;
     }
 
@@ -134,7 +141,7 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
     }
 
     $scope.switchContext = function(context){
-        // Switch UI depending if it's a user or an admin
+        // Switch UI to cater to either admin or user
         $scope.context = $scope.contexts[context];
         $scope.adminSuccess = false;
         $($scope.userName).removeClass("badinput");

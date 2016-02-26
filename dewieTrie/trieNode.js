@@ -13,9 +13,8 @@ var trieNode = function() {
             return true;
         }
 
-        nextLetter = word[0];
-
         // If the next letter does not exist as a child node, add it.
+        var nextLetter = word[0];
         if (!(nextLetter in this.children)){
             this.children[nextLetter] = new this.trieNode();
         }
@@ -51,7 +50,7 @@ var trieNode = function() {
             localCollection.push(wordSoFar);
         }
 
-        // Continue the depth first search
+        // Continue the search
         for (var nextLetter in this.children){
             localCollection = this.children[nextLetter].getOffspring(wordSoFar + nextLetter, collectionOfWords);
         }
