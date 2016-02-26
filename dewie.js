@@ -66,9 +66,7 @@ initializeTrie.buildTrieFromDb();
 // ROUTES
 // ======
 app.get("/", function(req, res){
-    console.dir(JSON.stringify(trie.placeMarker("ap").getOffspring("ap", [])));
     res.sendFile(__dirname + "/app/index.html");
-    console.log(__dirname);
 })
 
 app.post("/requestResource", function(req, res){
