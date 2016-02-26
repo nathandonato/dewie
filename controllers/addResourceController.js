@@ -30,8 +30,7 @@ var addResourceController = function(req, res, Resource, trie){
             if(error){
                 res.status(500);
                 res.send(JSON.stringify(error));
-            }
-            else{
+            } else{
                 res.status(200);
                 res.send(JSON.stringify(data));
             }
