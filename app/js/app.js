@@ -107,7 +107,7 @@ dewie.controller('mainController', ['$scope', '$http', function ($scope, $http){
         return true;
     }
 
-    // This is the autocompete function.
+    // This is the autocomplete function.
     // It is wrapped in a timeout in case we want to only seek results
     // after the user has finished typing for several hundred milliseconds.
     // The purpose of this would be to lessen the number of requests.
