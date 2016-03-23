@@ -1,7 +1,15 @@
 # dewie
-A mock resource management framework
+A mock resource management framework.
 
-### To set up an instance of dewie:
+Where users can request company resources:
+
+![](https://github.com/nathandonato/dewie/blob/master/media/UserRequest.gif)
+
+And administrators can add company resources to the database:
+
+![](https://github.com/nathandonato/dewie/blob/master/media/AdminAdd.gif)
+
+### To set up an instance of dewie (on Ubuntu):
 
 Before we being, you'll need a few things.
 
